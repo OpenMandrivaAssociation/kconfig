@@ -5,13 +5,13 @@
 
 Name: kconfig
 Version: 4.98.0
-Release: 1
+Release: 2
 Source0: http://ftp5.gwdg.de/pub/linux/kde/unstable/frameworks/%{version}/%{name}-%{version}.tar.xz
 Summary: The KDE Frameworks 5 configuration library
 URL: http://kde.org/
 License: GPL
 Group: System/Libraries
-BuildRequires: cmake
+BuildRequires: cmake >= 2.8.12.2-3
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt5Xml)
@@ -42,10 +42,7 @@ Development files (Headers etc.) for %{name}.
 
 %prep
 %setup -q
-# We allow cmake to return an error code because this should really be a
-# warning instead of an error:
-# install(EXPORT "KF5ConfigTargets") given absolute DESTINATION "/usr/lib64/cmake/KF5Config" but the export references an installation of target "kconfig_compiler_kf5" which has relative DESTINATION "bin"
-%cmake || :
+%cmake
 
 %build
 %make -C build
