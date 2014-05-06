@@ -5,7 +5,7 @@
 
 Name: kconfig
 Version: 4.98.0
-Release: 2
+Release: 3
 Source0: http://ftp5.gwdg.de/pub/linux/kde/unstable/frameworks/%{version}/%{name}-%{version}.tar.xz
 Summary: The KDE Frameworks 5 configuration library
 URL: http://kde.org/
@@ -28,6 +28,7 @@ The KDE Frameworks 5 configuration library.
 %package -n %{libname}
 Summary: The KDE Frameworks 5 configuration library
 Group: System/Libraries
+Requires: %{name} = %{EVRD}
 
 %description -n %{libname}
 The KDE Frameworks 5 configuration library.
