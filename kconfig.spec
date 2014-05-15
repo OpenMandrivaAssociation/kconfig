@@ -18,6 +18,8 @@ BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt5Xml)
 BuildRequires: pkgconfig(Qt5Test)
 BuildRequires: pkgconfig(Qt5Concurrent)
+BuildRequires: cmake(Qt5LinguistTools)
+BuildRequires: qt5-platformtheme-gtk2
 BuildRequires: qmake5
 BuildRequires: extra-cmake-modules5
 BuildRequires: ninja
