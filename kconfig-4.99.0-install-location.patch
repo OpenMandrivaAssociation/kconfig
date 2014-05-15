@@ -1,0 +1,11 @@
+--- kconfig-4.99.0/CMakeLists.txt.omv~	2014-05-15 21:07:22.531643761 +0200
++++ kconfig-4.99.0/CMakeLists.txt	2014-05-15 21:08:46.755685514 +0200
+@@ -52,7 +52,7 @@ install(FILES  "${CMAKE_CURRENT_BINARY_D
+         COMPONENT Devel )
+ 
+ 
+-install(EXPORT KF5ConfigTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
++install(EXPORT KF5ConfigTargets DESTINATION "lib${LIB_SUFFIX}/cmake/KF5Config"
+         FILE KF5ConfigTargets.cmake NAMESPACE KF5:: COMPONENT Devel)
+ 
+ 

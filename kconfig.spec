@@ -4,9 +4,10 @@
 %define debug_package %{nil}
 
 Name: kconfig
-Version: 4.98.0
-Release: 3
+Version: 4.99.0
+Release: 1
 Source0: http://ftp5.gwdg.de/pub/linux/kde/unstable/frameworks/%{version}/%{name}-%{version}.tar.xz
+Patch0: kconfig-4.99.0-install-location.patch
 Summary: The KDE Frameworks 5 configuration library
 URL: http://kde.org/
 License: GPL
@@ -43,6 +44,7 @@ Development files (Headers etc.) for %{name}.
 
 %prep
 %setup -q
+%apply_patches
 %cmake
 
 %build
@@ -53,8 +55,18 @@ Development files (Headers etc.) for %{name}.
 mkdir -p %{buildroot}%{_libdir}/qt5
 mv %{buildroot}%{_prefix}/mkspecs %{buildroot}%{_libdir}/qt5
 
-%files
-%{_libdir}/kde5/libexec/kconf_update
+L="`pwd`/kconfig%{major}_qt.lang"
+cd %{buildroot}
+for i in .%{_datadir}/locale/*/LC_MESSAGES/*.qm; do
+	LNG=`echo $i |cut -d/ -f5`
+	echo -n "%lang($LNG) " >>$L
+	echo $i |cut -b2- >>$L
+done
+
+%files -f kconfig%{major}_qt.lang
+%{_bindir}/kreadconfig5
+%{_bindir}/kwriteconfig5
+%{_libdir}/libexec/kf5/kconf_update
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}
