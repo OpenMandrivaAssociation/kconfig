@@ -7,13 +7,13 @@
 Name: kconfig
 Version: 5.10.0
 Release: 1
-Source0: http://ftp5.gwdg.de/pub/linux/kde/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
+Source0: http://download.kde.org/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Patch0: kconfig-4.99.0-install-location.patch
 Summary: The KDE Frameworks 5 configuration library
 URL: http://kde.org/
 License: GPL
 Group: System/Libraries
-BuildRequires: cmake >= 2.8.12.2-3
+BuildRequires: cmake(ECM)
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt5Xml)
@@ -21,9 +21,6 @@ BuildRequires: pkgconfig(Qt5Test)
 BuildRequires: pkgconfig(Qt5Concurrent)
 BuildRequires: cmake(Qt5LinguistTools)
 BuildRequires: qt5-platformtheme-gtk2
-BuildRequires: qmake5
-BuildRequires: extra-cmake-modules5
-BuildRequires: ninja
 Requires: %{libname} = %{EVRD}
 
 %description
@@ -48,14 +45,13 @@ Development files (Headers etc.) for %{name}.
 %prep
 %setup -q
 %apply_patches
-%cmake -G Ninja \
-	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON
+%cmake_kde5
 
 %build
-ninja -C build
+%ninja -C build
 
 %install
-DESTDIR="%{buildroot}" ninja -C build install
+%ninja_install -C build
 
 L="`pwd`/kconfig%{major}_qt.lang"
 cd %{buildroot}
