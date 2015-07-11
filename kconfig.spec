@@ -71,7 +71,7 @@ done
 %{_libdir}/*.so.%{version}
 
 %files -n %{devname}
-%{_bindir}/kconfig_compiler_kf5
+%{_libdir}/libexec/kf5/kconfig_compiler_kf5
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/cmake/KF5Config
