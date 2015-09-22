@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   kconfig-5.13.0.tar.xz: b0a0f75cbfaca57e7246048a7b31ff6b21223d7b
+sources:
+  kconfig-5.14.0.tar.xz: 81e8410f54eb0a508cb00a20b38ed52ffdb737aa
