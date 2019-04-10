@@ -5,8 +5,8 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 
 Name: kconfig
-Version:	5.56.0
-Release:	2
+Version:	5.57.0
+Release:	1
 Source0: http://download.kde.org/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Patch0: kconfig-4.99.0-install-location.patch
 Summary: The KDE Frameworks 5 configuration library
@@ -22,6 +22,14 @@ BuildRequires: pkgconfig(Qt5Test)
 BuildRequires: pkgconfig(Qt5Concurrent)
 BuildRequires: cmake(Qt5LinguistTools)
 BuildRequires: qt5-platformtheme-gtk2
+# For Python bindings
+BuildRequires: cmake(PythonModuleGeneration)
+BuildRequires: pkgconfig(python3)
+BuildRequires: python-qt5-core
+BuildRequires: python-qt5-gui
+BuildRequires: python-qt5-widgets
+# For QCH format docs
+BuildRequires: qt5-assistant
 Requires: %{libname} = %{EVRD}
 
 %description
@@ -43,9 +51,24 @@ Requires: %{libname} = %{EVRD}
 %description -n %{devname}
 Development files (Headers etc.) for %{name}.
 
+%package -n %{name}-devel-docs
+Summary: Developer documentation for %{name} for use with Qt Assistant
+Group: Documentation
+Suggests: %{devname} = %{EVRD}
+
+%description -n %{name}-devel-docs
+Developer documentation for %{name} for use with Qt Assistant
+
+%package -n python-%{name}
+Summary: Python bindings for %{name}
+Group: System/Libraries
+Requires: %{libname} = %{EVRD}
+
+%description -n python-%{name}
+Python bindings for %{name}
+
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 %cmake_kde5
 
 %build
@@ -53,6 +76,8 @@ Development files (Headers etc.) for %{name}.
 
 %install
 %ninja_install -C build
+
+[ -s %{buildroot}%{python_sitearch}/PyKF5/__init__.py ] || rm -f %{buildroot}%{python_sitearch}/PyKF5/__init__.py
 
 L="`pwd`/kconfig%{major}_qt.lang"
 cd %{buildroot}
@@ -77,3 +102,14 @@ done
 %{_libdir}/*.so
 %{_libdir}/cmake/KF5Config
 %{_libdir}/qt5/mkspecs/modules/*.pri
+
+%files -n %{name}-devel-docs
+%{_docdir}/qt5/*.{tags,qch}
+
+%files -n python-%{name}
+%dir %{python_sitearch}/PyKF5
+%{python_sitearch}/PyKF5/KConfigCore.so
+%{python_sitearch}/PyKF5/KConfigGui.so
+%dir %{_datadir}/sip/PyKF5
+%{_datadir}/sip/PyKF5/KConfigCore
+%{_datadir}/sip/PyKF5/KConfigGui
