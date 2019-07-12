@@ -5,7 +5,7 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 
 Name: kconfig
-Version:	5.59.0
+Version:	5.60.0
 Release:	1
 Source0: http://download.kde.org/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Patch0: kconfig-4.99.0-install-location.patch
@@ -87,6 +87,9 @@ for i in .%{_datadir}/locale/*/LC_MESSAGES/*.qm; do
 	echo -n "%lang($LNG) " >>$L
 	echo $i |cut -b2- >>$L
 done
+# Let's not ship py2 crap unless and until something still needs it...
+rm -rf %{buildroot}%{_libdir}/python2*
+
 
 %files -f kconfig%{major}_qt.lang
 %{_bindir}/kreadconfig5
