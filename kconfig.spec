@@ -5,7 +5,7 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 
 Name: kconfig
-Version:	5.72.0
+Version:	5.73.0
 Release:	1
 Source0: http://download.kde.org/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Patch0: kconfig-4.99.0-install-location.patch
@@ -96,6 +96,7 @@ rm -rf %{buildroot}%{_libdir}/python2*
 %{_bindir}/kwriteconfig5
 %{_libdir}/libexec/kf5/kconf_update
 %{_datadir}/qlogging-categories5/kconfig.categories
+%{_datadir}/qlogging-categories5/kconfig.renamecategories
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}
