@@ -80,8 +80,7 @@ done
 %{_datadir}/qlogging-categories5/kconfig.renamecategories
 
 %files -n %{libname}
-%{_libdir}/*.so.%{major}
-%{_libdir}/*.so.%{version}
+%{_libdir}/*.so.%{major}*
 
 %files -n %{devname}
 %{_libdir}/libexec/kf5/kconfig_compiler_kf5
